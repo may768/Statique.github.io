@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Statique | Normal Distribution Calculator</title>
+  <link rel="stylesheet" href="css/normal-distribution.css" />
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>📈 Normal Distribution Calculator</h1>
+    <nav><a href="distribution.html">← Back to Distributions</a></nav>
+  </header>
+
+  <main>
+    <form id="normalForm">
+      <label>Mean (μ):</label>
+      <input type="number" step="any" id="mean" value="0" required />
+
+      <label>Standard Deviation (σ):</label>
+      <input type="number" step="any" id="stddev" value="1" required />
+
+      <label>Enter Z / X value(s):</label>
+      <input type="number" step="any" id="z1" placeholder="e.g. -1.96" required />
+      <input type="number" step="any" id="z2" placeholder="Optional second value for two-tailed" />
+
+      <label>Tail Type:</label>
+      <select id="tailType">
+        <option value="left">Left-Tail</option>
+        <option value="right">Right-Tail</option>
+        <option value="two">Two-Tailed</option>
+      </select>
+
+      <button type="submit">🔍 Compute & Plot</button>
+    </form>
+
+    <div id="output"></div>
+    <div id="plot" style="margin-top: 40px;"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Statique. All rights reserved.</p>
+  </footer>
+
+  <script src="js/normal-distribution.js"></script>
+</body>
+</html>

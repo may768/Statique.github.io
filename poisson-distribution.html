@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Statique | Poisson Distribution Calculator</title>
+  <link rel="stylesheet" href="css/poisson-distribution.css" />
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>🧮 Poisson Distribution Calculator</h1>
+    <nav><a href="distribution.html">← Back to Distribution Tools</a></nav>
+  </header>
+
+  <main>
+    <form id="poissonForm">
+      <label for="lambda">λ (mean rate of occurrence):</label>
+      <input type="number" id="lambda" step="any" required placeholder="e.g., 4.5" />
+
+      <label for="kValue">k (number of events):</label>
+      <input type="number" id="kValue" required placeholder="e.g., 3" />
+
+      <button type="submit">Calculate</button>
+    </form>
+
+    <div id="result" class="solution-box"></div>
+    <div id="plot" style="margin-top: 30px;"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Statique. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("poissonForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const lambda = parseFloat(document.getElementById("lambda").value);
+      const k = parseInt(document.getElementById("kValue").value);
+      const resultBox = document.getElementById("result");
+      const plotDiv = document.getElementById("plot");
+
+      if (isNaN(lambda) || lambda <= 0 || isNaN(k) || k < 0) {
+        resultBox.innerHTML = `<p style="color:red;"><strong>Error:</strong> λ must be > 0 and k ≥ 0.</p>`;
+        plotDiv.innerHTML = "";
+        return;
+      }
+
+      // Factorial function
+      const factorial = (n) => n <= 1 ? 1 : n * factorial(n - 1);
+
+      // PMF and CDF
+      const poissonPMF = (λ, x) => (Math.pow(λ, x) * Math.exp(-λ)) / factorial(x);
+      const poissonCDF = (λ, x) => {
+        let sum = 0;
+        for (let i = 0; i <= x; i++) sum += poissonPMF(λ, i);
+        return sum;
+      };
+
+      const pmf = poissonPMF(lambda, k);
+      const cdf = poissonCDF(lambda, k);
+
+      // Step-by-step solution
+      const terms = Array.from({ length: k + 1 }, (_, i) =>
+        `P(X = ${i}) = (${lambda}<sup>${i}</sup> · e<sup>−${lambda}</sup>) / ${i}! = ${poissonPMF(lambda, i).toFixed(6)}`
+      ).join("<br>");
+
+      resultBox.innerHTML = `
+        <strong>📘 Poisson Distribution Calculation</strong><br><br>
+        <strong>Step 1: Given</strong><br>
+        λ = ${lambda}, k = ${k}<br><br>
+
+        <strong>Step 2: PMF Formula</strong><br>
+        P(X = k) = (λ^k · e^(−λ)) / k!<br><br>
+
+        <strong>Step 3: Plug in Values</strong><br>
+        P(X = ${k}) = (${lambda}<sup>${k}</sup> · e<sup>−${lambda}</sup>) / ${k}!<br>
+        = (${Math.pow(lambda, k).toFixed(4)} × ${Math.exp(-lambda).toFixed(6)}) / ${factorial(k)}<br>
+        = <strong>${pmf.toFixed(6)}</strong><br><br>
+
+        <strong>Step 4: CDF (P(X ≤ ${k}))</strong><br>
+        Sum of probabilities:<br>
+        ${terms}<br><br>
+        Total CDF = <strong>${cdf.toFixed(6)}</strong>
+      `;
+
+      // Plotting
+      const maxX = Math.max(k + 5, Math.ceil(lambda * 2));
+      const xVals = Array.from({ length: maxX + 1 }, (_, i) => i);
+      const yVals = xVals.map(x => poissonPMF(lambda, x));
+
+      const trace = {
+        x: xVals,
+        y: yVals,
+        type: "bar",
+        marker: {
+          color: xVals.map(x => x === k ? "#e63946" : "#0057b7")
+        },
+        name: "P(X = k)"
+      };
+
+      const layout = {
+        title: `Poisson Distribution (λ = ${lambda})`,
+        xaxis: { title: "k (events)" },
+        yaxis: { title: "Probability" },
+        bargap: 0.05
+      };
+
+      Plotly.newPlot(plotDiv, [trace], layout);
+    });
+  </script>
+</body>
+</html>

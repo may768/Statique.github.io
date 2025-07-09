@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Statique | t-Distribution Calculator</title>
+  <link rel="stylesheet" href="css/t-distribution.css" />
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.4/jstat.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>📊 t-Distribution Calculator</h1>
+    <nav><a href="distribution.html">← Back to Distribution Tools</a></nav>
+  </header>
+
+  <main>
+    <form id="tForm">
+      <label for="tValue">t-value:</label>
+      <input type="number" id="tValue" step="any" required placeholder="e.g., 2.1" />
+
+      <label for="df">Degrees of freedom (df):</label>
+      <input type="number" id="df" required placeholder="e.g., 10" />
+
+      <label for="tail">Tail Type:</label>
+      <select id="tail">
+        <option value="two">Two-tailed</option>
+        <option value="left">Left-tailed</option>
+        <option value="right">Right-tailed</option>
+      </select>
+
+      <button type="submit">Calculate</button>
+    </form>
+
+    <div id="result"></div>
+    <div id="plot" style="margin-top: 30px;"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Statique. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("tForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const t = parseFloat(document.getElementById("tValue").value);
+      const df = parseInt(document.getElementById("df").value);
+      const tail = document.getElementById("tail").value;
+      const resultBox = document.getElementById("result");
+      const plotBox = document.getElementById("plot");
+
+      if (isNaN(t) || isNaN(df) || df <= 0) {
+        resultBox.innerHTML = `<span style="color:red;"><strong>Error:</strong> Please enter a valid t and df (df > 0).</span>`;
+        plotBox.innerHTML = "";
+        return;
+      }
+
+      // Compute p-value using jStat
+      const pLeft = jStat.studentt.cdf(t, df);
+      const pRight = 1 - jStat.studentt.cdf(t, df);
+      let pValue, explanation;
+
+      if (tail === "two") {
+        pValue = 2 * Math.min(pLeft, pRight);
+        explanation = `
+          <strong>Two-Tailed Test:</strong><br>
+          p-value = 2 × min(P(T ≤ ${t}), P(T ≥ ${t}))<br>
+          = 2 × ${Math.min(pLeft, pRight).toFixed(6)}<br>
+          = <strong>${pValue.toFixed(6)}</strong>
+        `;
+      } else if (tail === "left") {
+        pValue = pLeft;
+        explanation = `
+          <strong>Left-Tailed Test:</strong><br>
+          p-value = P(T ≤ ${t}) = <strong>${pValue.toFixed(6)}</strong>
+        `;
+      } else {
+        pValue = pRight;
+        explanation = `
+          <strong>Right-Tailed Test:</strong><br>
+          p-value = P(T ≥ ${t}) = <strong>${pValue.toFixed(6)}</strong>
+        `;
+      }
+
+      // Step-by-step result
+      resultBox.innerHTML = `
+        <p><strong>Input:</strong></p>
+        <ul>
+          <li>t-value = ${t}</li>
+          <li>Degrees of freedom (df) = ${df}</li>
+          <li>Tail type = ${tail.replace("-", " ")}</li>
+        </ul>
+        <hr>
+        <p><strong>📘 Step-by-step Solution:</strong></p>
+        <p>${explanation}</p>
+      `;
+
+      // Plot t-distribution with vertical line at t
+      const x = [], y = [];
+      const lower = -5, upper = 5;
+      for (let i = lower; i <= upper; i += 0.1) {
+        x.push(i);
+        y.push(jStat.studentt.pdf(i, df));
+      }
+
+      const trace = {
+        x: x,
+        y: y,
+        type: "scatter",
+        mode: "lines",
+        name: "t-distribution",
+        line: { color: "#0057b7" }
+      };
+
+      const layout = {
+        title: `t-Distribution (df = ${df})`,
+        xaxis: { title: "t" },
+        yaxis: { title: "Density" },
+        shapes: [{
+          type: "line",
+          x0: t,
+          y0: 0,
+          x1: t,
+          y1: Math.max(...y),
+          line: { color: "red", width: 2, dash: "dot" }
+        }]
+      };
+
+      Plotly.newPlot(plotBox, [trace], layout);
+    });
+  </script>
+</body>
+</html>

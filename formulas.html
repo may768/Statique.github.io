@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Statique | Statistical Formulas</title>
+  <link rel="stylesheet" href="css/formulas.css" />
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+  <header>
+    <h1>📊 Statistical Formulas</h1>
+  </header>
+
+  <main>
+
+    <!-- Mean -->
+    <section>
+      <h2>Mean (Average)</h2>
+      <p>
+        $$ \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i $$
+        <br>
+        <strong>Where:</strong><br>
+        \( \bar{x} \): sample mean<br>
+        \( n \): number of data points<br>
+        \( x_i \): each data value
+      </p>
+    </section>
+<section>
+  <h2>Median</h2>
+  <p>
+    - If \( n \) is odd: Median = middle value<br>
+    - If \( n \) is even: Median = average of two middle values
+  </p>
+</section>
+<section>
+  <h2>Mode</h2>
+  <p>
+    The value that occurs most frequently in the dataset.
+  </p>
+</section>
+    <!-- Variance -->
+    <section>
+      <h2>Variance</h2>
+      <p>
+        Population Variance:<br>
+        $$ \sigma^2 = \frac{1}{N} \sum_{i=1}^{N} (x_i - \mu)^2 $$
+        Sample Variance:<br>
+        $$ s^2 = \frac{1}{n - 1} \sum_{i=1}^{n} (x_i - \bar{x})^2 $$
+        <br>
+        <strong>Where:</strong><br>
+        \( \sigma^2 \): population variance<br>
+        \( s^2 \): sample variance<br>
+        \( \mu \): population mean<br>
+        \( \bar{x} \): sample mean<br>
+        \( x_i \): individual value<br>
+        \( N, n \): population/sample size
+      </p>
+    </section>
+
+    <!-- Standard Deviation -->
+    <section>
+      <h2>Standard Deviation</h2>
+      <p>
+        $$ \sigma = \sqrt{ \frac{1}{N} \sum_{i=1}^{N} (x_i - \mu)^2 } $$
+        or
+        $$ s = \sqrt{ \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2 } $$
+        <br>
+        <strong>Where:</strong><br>
+        \( \sigma \): population standard deviation<br>
+        \( s \): sample standard deviation
+      </p>
+    </section>
+
+    <!-- Z-score -->
+    <section>
+      <h2>Z-Score</h2>
+      <p>
+        Individual score:<br>
+        $$ Z = \frac{x - \mu}{\sigma} $$
+        Sample mean:<br>
+        $$ Z = \frac{\bar{x} - \mu}{\sigma / \sqrt{n}} $$
+        <br>
+        <strong>Where:</strong><br>
+        \( x \): individual value<br>
+        \( \bar{x} \): sample mean<br>
+        \( \mu \): population mean<br>
+        \( \sigma \): population standard deviation<br>
+        \( n \): sample size
+      </p>
+    </section>
+
+    <section>
+  <h2>Confidence Interval for Mean</h2>
+  <p>
+    $$ \bar{x} \pm Z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}} $$
+  </p>
+</section>
+<section>
+  <h2>Confidence Interval for Proportion</h2>
+  <p>
+    $$ \hat{p} \pm Z_{\alpha/2} \cdot \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}} $$
+  </p>
+</section>
+
+
+    <!-- p-value -->
+    <section>
+      <h2>p-Value (for Z-Test)</h2>
+      <p>
+        $$ p = 2 \cdot (1 - \Phi(|Z|)) \quad \text{(for two-tailed)} $$
+        <br>
+        <strong>Where:</strong><br>
+        \( \Phi(Z) \): standard normal CDF (area under curve)<br>
+        \( Z \): Z-score
+      </p>
+    </section>
+
+    <section>
+  <h2>1-Sample t-Test</h2>
+  <p>
+    $$ t = \frac{\bar{x} - \mu}{s / \sqrt{n}} $$
+  </p>
+</section>
+<section>
+  <h2>2-Sample t-Test (Equal Variance)</h2>
+  <p>
+    $$ t = \frac{\bar{x}_1 - \bar{x}_2}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} $$
+    <br>
+    Where:
+    $$ s_p = \sqrt{ \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2} } $$
+  </p>
+</section>
+
+<section>
+  <h2>One-Way ANOVA</h2>
+  <p>
+    $$ F = \frac{\text{MS}_{\text{between}}}{\text{MS}_{\text{within}}} $$
+    <br>
+    Where:
+    $$ \text{MS}_{\text{between}} = \frac{\text{SS}_{\text{between}}}{k - 1}, \quad \text{MS}_{\text{within}} = \frac{\text{SS}_{\text{within}}}{n - k} $$
+  </p>
+</section>
+
+    <!-- Chi-Square -->
+    <section>
+      <h2>Chi-Square Statistic</h2>
+      <p>
+        $$ \chi^2 = \sum \frac{(O_i - E_i)^2}{E_i} $$
+        <br>
+        <strong>Where:</strong><br>
+        \( O_i \): observed frequency<br>
+        \( E_i \): expected frequency
+      </p>
+    </section>
+
+    <!-- Pearson Correlation -->
+    <section>
+      <h2>Pearson Correlation Coefficient</h2>
+      <p>
+        $$ r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}} $$
+        <br>
+        <strong>Where:</strong><br>
+        \( x_i, y_i \): data values<br>
+        \( \bar{x}, \bar{y} \): means of x and y
+      </p>
+    </section>
+<section>
+  <h2>Binomial Distribution</h2>
+  <p>
+    $$ P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k} $$
+    <br>
+    <strong>Where:</strong> \( n \) = number of trials, \( k \) = number of successes, \( p \) = probability of success
+  </p>
+</section>
+
+<section>
+  <h2>Poisson Distribution</h2>
+  <p>
+    $$ P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!} $$
+    <br>
+    <strong>Where:</strong><br>
+    \( \lambda \): average rate (mean)<br>
+    \( k \): number of occurrences<br>
+    \( e \): Euler’s number (~2.718)
+  </p>
+</section>
+<section>
+  <h2>Normal Distribution (PDF)</h2>
+  <p>
+    $$ f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{- \frac{(x - \mu)^2}{2\sigma^2}} $$
+    <br>
+    <strong>Where:</strong> \( \mu \) = mean, \( \sigma \) = standard deviation
+  </p>
+</section>
+<section>
+  <h2>Exponential Distribution</h2>
+  <p>
+    $$ f(x) = \lambda e^{-\lambda x} \quad \text{for } x \geq 0 $$
+  </p>
+</section>
+
+<section>
+  <h2>Standard Error of the Mean</h2>
+  <p>
+    $$ SE = \frac{s}{\sqrt{n}} $$
+    <br>
+    <strong>Where:</strong><br>
+    \( s \): sample standard deviation<br>
+    \( n \): sample size
+  </p>
+</section>
+<section>
+  <h2>Simple Linear Regression Line</h2>
+  <p>
+    $$ y = a + bx $$
+    <br>
+    $$ b = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2} $$
+    $$ a = \bar{y} - b\bar{x} $$
+    <br>
+    <strong>Where:</strong><br>
+    \( a \): intercept<br>
+    \( b \): slope<br>
+    \( \bar{x}, \bar{y} \): means of x and y
+  </p>
+</section>
+
+<section>
+  <h2>Coefficient of Determination (R²)</h2>
+  <p>
+    $$ R^2 = 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}} $$
+    <br>
+    <strong>Where:</strong><br>
+    \( SS_{\text{res}} \): residual sum of squares<br>
+    \( SS_{\text{tot}} \): total sum of squares
+  </p>
+</section>
+
+
+<section>
+  <h2>Bayes’ Theorem</h2>
+  <p>
+    $$ P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)} $$
+    <br>
+    <strong>Where:</strong><br>
+    \( P(A \mid B) \): probability of A given B<br>
+    \( P(B \mid A) \): probability of B given A<br>
+    \( P(A), P(B) \): probabilities of A and B
+  </p>
+</section>
+<section>
+  <h2>Spearman Rank Correlation</h2>
+  <p>
+    $$ r_s = 1 - \frac{6 \sum d_i^2}{n(n^2 - 1)} $$
+    <br>
+    <strong>Where:</strong> \( d_i \) = difference in ranks
+  </p>
+</section>
+<section>
+  <h2>Moving Average</h2>
+  <p>
+    $$ MA_t = \frac{1}{k} \sum_{i=0}^{k-1} x_{t-i} $$
+    <br>
+    <strong>Where:</strong> \( k \) is the window size
+  </p>
+</section>
+<section>
+  <h2>Exponential Smoothing</h2>
+  <p>
+    $$ S_t = \alpha x_t + (1 - \alpha) S_{t-1} $$
+    <br>
+    <strong>Where:</strong> \( \alpha \) = smoothing constant
+  </p>
+</section>
+<section>
+  <h2>Shannon Entropy</h2>
+  <p>
+    $$ H(X) = -\sum_{i} p(x_i) \log_2 p(x_i) $$
+  </p>
+</section>
+
+
+<section>
+  <h2>Kullback–Leibler Divergence</h2>
+  <p>\[ D_{KL}(P || Q) = \sum P(x) \log \left( \frac{P(x)}{Q(x)} \right) \]</p>
+</section>
+<!-- Expected Value -->
+<section>
+  <h2>Expected Value</h2>
+  <p>\[ E[X] = \sum x_i \cdot P(x_i) \quad \text{(discrete)} \]</p>
+  <p>\[ E[X] = \int_{-\infty}^{\infty} x \cdot f(x) \, dx \quad \text{(continuous)} \]</p>
+</section>
+<!-- Variance (Expected Value Form) -->
+<section>
+  <h2>Variance (from Expected Values)</h2>
+  <p>\[ \mathrm{Var}(X) = E[X^2] - (E[X])^2 \]</p>
+</section>
+<!-- Skewness -->
+<section>
+  <h2>Skewness</h2>
+  <p>\[ \text{Skewness} = \frac{1}{n} \sum \left( \frac{x_i - \bar{x}}{s} \right)^3 \]</p>
+</section>
+
+<!-- Kurtosis -->
+<section>
+  <h2>Kurtosis</h2>
+  <p>\[ \text{Kurtosis} = \frac{1}{n} \sum \left( \frac{x_i - \bar{x}}{s} \right)^4 \]</p>
+</section>
+
+<!-- Covariance -->
+<section>
+  <h2>Covariance</h2>
+  <p>\[ \mathrm{Cov}(X, Y) = \frac{1}{n} \sum (x_i - \bar{x})(y_i - \bar{y}) \]</p>
+</section>
+<section>
+  <h2>📘 Symbols & Notations Reference</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>\( \bar{x} \)</td><td>Sample mean</td></tr>
+      <tr><td>\( \mu \)</td><td>Population mean</td></tr>
+      <tr><td>\( s \)</td><td>Sample standard deviation</td></tr>
+      <tr><td>\( \sigma \)</td><td>Population standard deviation</td></tr>
+      <tr><td>\( s^2 \)</td><td>Sample variance</td></tr>
+      <tr><td>\( \sigma^2 \)</td><td>Population variance</td></tr>
+      <tr><td>\( n \)</td><td>Sample size</td></tr>
+      <tr><td>\( N \)</td><td>Population size</td></tr>
+      <tr><td>\( p \)</td><td>Sample proportion</td></tr>
+      <tr><td>\( P \)</td><td>Population proportion</td></tr>
+      <tr><td>\( Z \)</td><td>Z-score</td></tr>
+      <tr><td>\( t \)</td><td>t-statistic</td></tr>
+      <tr><td>\( \alpha \)</td><td>Significance level</td></tr>
+      <tr><td>\( \beta \)</td><td>Type II error / Regression coefficient</td></tr>
+      <tr><td>\( \hat{y} \)</td><td>Predicted value</td></tr>
+      <tr><td>\( y \)</td><td>Actual value</td></tr>
+      <tr><td>\( \varepsilon \)</td><td>Random error term</td></tr>
+      <tr><td>\( \Phi(z) \)</td><td>Cumulative distribution function (CDF) of standard normal</td></tr>
+      <tr><td>\( \operatorname{erf}(x) \)</td><td>Error function</td></tr>
+      <tr><td>\( R^2 \)</td><td>Coefficient of determination</td></tr>
+      <tr><td>\( \bar{R}^2 \)</td><td>Adjusted R-squared</td></tr>
+      <tr><td>\( \sum \)</td><td>Summation symbol</td></tr>
+      <tr><td>\( \prod \)</td><td>Product notation</td></tr>
+      <tr><td>\( E[X] \)</td><td>Expected value of X</td></tr>
+      <tr><td>\( \mathrm{Var}(X) \)</td><td>Variance of X</td></tr>
+      <tr><td>\( \mathrm{Cov}(X, Y) \)</td><td>Covariance between X and Y</td></tr>
+      <tr><td>\( f(x) \)</td><td>Probability density function (PDF)</td></tr>
+      <tr><td>\( P(A|B) \)</td><td>Conditional probability of A given B</td></tr>
+      <tr><td>\( F \)</td><td>F-statistic</td></tr>
+      <tr><td>\( \chi^2 \)</td><td>Chi-square statistic</td></tr>
+    </tbody>
+  </table>
+</section>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Statique. All rights reserved.</p>
+  </footer>
+</body>
+</html>

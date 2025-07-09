@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Statique | Reliability Distributions</title>
+  <link rel="stylesheet" href="css/reliability-distributions.css" />
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>📉 Reliability Distributions</h1>
+    <nav><a href="distribution.html">← Back to Distribution Tools</a></nav>
+  </header>
+
+  <main>
+    <form id="reliabilityForm">
+      <label for="distributionType">Select Distribution:</label>
+      <select id="distributionType" required>
+        <option value="exponential">Exponential</option>
+        <option value="gamma">Gamma</option>
+        <option value="weibull">Weibull</option>
+      </select>
+
+      <label for="xValue">x (time):</label>
+      <input type="number" id="xValue" step="any" required placeholder="e.g., 5" />
+
+      <div id="params">
+        <!-- Parameters will be dynamically generated -->
+      </div>
+
+      <button type="submit">Calculate</button>
+    </form>
+
+    <div id="solution"></div>
+    <div id="plot" style="margin-top: 30px;"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Statique. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const distributionType = document.getElementById("distributionType");
+    const paramsDiv = document.getElementById("params");
+    const form = document.getElementById("reliabilityForm");
+    const solutionBox = document.getElementById("solution");
+    const plotDiv = document.getElementById("plot");
+
+    const updateParams = () => {
+      const dist = distributionType.value;
+      paramsDiv.innerHTML = "";
+
+      if (dist === "exponential") {
+        paramsDiv.innerHTML = `
+          <label for="lambda">λ (rate):</label>
+          <input type="number" id="lambda" step="any" required placeholder="e.g., 0.2" />
+        `;
+      } else if (dist === "gamma") {
+        paramsDiv.innerHTML = `
+          <label for="alpha">α (shape):</label>
+          <input type="number" id="alpha" step="any" required placeholder="e.g., 3" />
+          <label for="beta">β (rate):</label>
+          <input type="number" id="beta" step="any" required placeholder="e.g., 2" />
+        `;
+      } else if (dist === "weibull") {
+        paramsDiv.innerHTML = `
+          <label for="shape">k (shape):</label>
+          <input type="number" id="shape" step="any" required placeholder="e.g., 1.5" />
+          <label for="scale">λ (scale):</label>
+          <input type="number" id="scale" step="any" required placeholder="e.g., 3" />
+        `;
+      }
+    };
+
+    distributionType.addEventListener("change", updateParams);
+    window.addEventListener("DOMContentLoaded", updateParams);
+
+    const gamma = (z) => {
+      if (z < 0.5) return Math.PI / (Math.sin(Math.PI * z) * gamma(1 - z));
+      let x = 1;
+      for (let i = z - 1; i > 1; i--) x *= i;
+      return x;
+    };
+
+    const gammaCDF = (x, alpha, beta) => {
+      let sum = 0;
+      for (let k = 0; k < 100; k++) {
+        const term = Math.pow(beta * x, k + alpha) * Math.exp(-beta * x) / (gamma(k + alpha + 1));
+        sum += term;
+      }
+      return 1 - sum;
+    };
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const x = parseFloat(document.getElementById("xValue").value);
+      const dist = distributionType.value;
+      solutionBox.innerHTML = "";
+      plotDiv.innerHTML = "";
+
+      let pdf = 0, cdf = 0, steps = "", xVals = [], yVals = [];
+
+      if (dist === "exponential") {
+        const lambda = parseFloat(document.getElementById("lambda").value);
+        if (lambda <= 0 || x < 0) return alert("λ > 0 and x ≥ 0 required.");
+
+        pdf = lambda * Math.exp(-lambda * x);
+        cdf = 1 - Math.exp(-lambda * x);
+
+        steps = `
+          <strong>Step 1:</strong> PDF = λ · e<sup>−λx</sup><br>
+          P(X = ${x}) = ${lambda} × e<sup>−${lambda}×${x}</sup> = <strong>${pdf.toFixed(6)}</strong><br><br>
+          <strong>Step 2:</strong> CDF = 1 − e<sup>−λx</sup><br>
+          P(X ≤ ${x}) = 1 − e<sup>−${lambda * x}</sup> = <strong>${cdf.toFixed(6)}</strong>
+        `;
+
+        for (let i = 0; i <= x + 10; i += 0.1) {
+          xVals.push(i);
+          yVals.push(lambda * Math.exp(-lambda * i));
+        }
+
+      } else if (dist === "gamma") {
+        const alpha = parseFloat(document.getElementById("alpha").value);
+        const beta = parseFloat(document.getElementById("beta").value);
+        if (alpha <= 0 || beta <= 0 || x < 0) return alert("α, β > 0 and x ≥ 0 required.");
+
+        pdf = (Math.pow(beta, alpha) * Math.pow(x, alpha - 1) * Math.exp(-beta * x)) / gamma(alpha);
+        cdf = gammaCDF(x, alpha, beta);
+
+        steps = `
+          <strong>Step 1:</strong> PDF = (β^α · x<sup>α−1</sup> · e<sup>−βx</sup>) / Γ(α)<br>
+          = (${beta}<sup>${alpha}</sup> × ${x}<sup>${alpha - 1}</sup> × e<sup>−${beta * x}</sup>) / Γ(${alpha}) = <strong>${pdf.toFixed(6)}</strong><br><br>
+          <strong>Step 2:</strong> Approx. CDF via series expansion:<br>
+          P(X ≤ ${x}) ≈ <strong>${cdf.toFixed(6)}</strong>
+        `;
+
+        for (let i = 0; i <= x + 10; i += 0.1) {
+          xVals.push(i);
+          yVals.push((Math.pow(beta, alpha) * Math.pow(i, alpha - 1) * Math.exp(-beta * i)) / gamma(alpha));
+        }
+
+      } else if (dist === "weibull") {
+        const k = parseFloat(document.getElementById("shape").value);
+        const lambda = parseFloat(document.getElementById("scale").value);
+        if (k <= 0 || lambda <= 0 || x < 0) return alert("k, λ > 0 and x ≥ 0 required.");
+
+        pdf = (k / lambda) * Math.pow(x / lambda, k - 1) * Math.exp(-Math.pow(x / lambda, k));
+        cdf = 1 - Math.exp(-Math.pow(x / lambda, k));
+
+        steps = `
+          <strong>Step 1:</strong> PDF = (k / λ) · (x / λ)<sup>k−1</sup> · e<sup>−(x/λ)<sup>k</sup></sup><br>
+          = (${k} / ${lambda}) × (${x} / ${lambda})<sup>${k - 1}</sup> × e<sup>−(${x}/${lambda})<sup>${k}</sup></sup><br>
+          = <strong>${pdf.toFixed(6)}</strong><br><br>
+          <strong>Step 2:</strong> CDF = 1 − e<sup>−(x/λ)<sup>k</sup></sup><br>
+          = 1 − e<sup>−${Math.pow(x / lambda, k).toFixed(4)}</sup> = <strong>${cdf.toFixed(6)}</strong>
+        `;
+
+        for (let i = 0.1; i <= x + 10; i += 0.1) {
+          xVals.push(i);
+          yVals.push((k / lambda) * Math.pow(i / lambda, k - 1) * Math.exp(-Math.pow(i / lambda, k)));
+        }
+      }
+
+      solutionBox.innerHTML = `
+        <div style="background:#eef3fc;padding:20px;border-left:5px solid #0057b7;border-radius:8px">
+          ${steps}
+        </div>
+      `;
+
+      const trace = {
+        x: xVals,
+        y: yVals,
+        type: "scatter",
+        mode: "lines",
+        line: { color: "#0057b7" }
+      };
+
+      const layout = {
+        title: `${distributionType.options[distributionType.selectedIndex].text} PDF`,
+        xaxis: { title: "x (time)" },
+        yaxis: { title: "Probability Density" }
+      };
+
+      Plotly.newPlot(plotDiv, [trace], layout);
+    });
+  </script>
+</body>
+</html>

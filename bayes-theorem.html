@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bayes' Theorem Calculator | Statique</title>
+  <link rel="stylesheet" href="css/bayes-theorem.css" />
+</head>
+<body>
+  <header>
+    <h1>📊 Bayes' Theorem Tool</h1>
+    <nav><a href="probability.html">← Back to Probability Tools</a></nav>
+  </header>
+
+  <main>
+    <form id="bayesForm">
+      <label>Prior Probability P(A):
+        <input type="number" id="pA" min="0" max="1" step="0.0001" required />
+      </label>
+      <label>Likelihood P(B|A):
+        <input type="number" id="pBgivenA" min="0" max="1" step="0.0001" required />
+      </label>
+      <label>Marginal Probability P(B):
+        <input type="number" id="pB" min="0" max="1" step="0.0001" required />
+      </label>
+      <button type="submit">Calculate</button>
+    </form>
+
+    <div id="result"></div>
+    <div id="solution"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Statique. All rights reserved.</p>
+  </footer>
+
+  <script src="js/bayes-theorem.js"></script>
+</body>
+</html>

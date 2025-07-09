@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Statique | Probability Calculator</title>
+  <link rel="stylesheet" href="css/probability-calculator.css" />
+</head>
+<body>
+  <header>
+    <h1>🎲 Probability Calculator</h1>
+    <nav><a href="probability.html">← Back to Probability Tools</a></nav>
+  </header>
+
+  <main>
+    <form id="probForm">
+      <label>P(A): <input type="number" step="0.01" min="0" max="1" id="pA" required /></label><br>
+      <label>P(B): <input type="number" step="0.01" min="0" max="1" id="pB" required /></label><br>
+      <label>P(A ∩ B) (if known): <input type="number" step="0.01" min="0" max="1" id="pAB" /></label><br>
+
+      <label>Event Type:
+        <select id="eventType">
+          <option value="independent">Independent</option>
+          <option value="dependent">Dependent</option>
+        </select>
+      </label><br>
+
+      <button type="submit">Calculate</button>
+    </form>
+
+    <div id="result"></div>
+    <div id="solution"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Statique. All rights reserved.</p>
+  </footer>
+
+  <script src="js/probability-calculator.js"></script>
+</body>
+</html>

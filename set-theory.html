@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Statique | Set Theory & Venn Tool</title>
+  <link rel="stylesheet" href="css/set-theory.css" />
+  <!-- D3 & Venn.js for circular Venn diagrams -->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/venn.js@0.2.20/venn.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>🧠 Set Theory & Venn Diagram Tool</h1>
+    <nav><a href="probability.html">← Back to Probability Tools</a></nav>
+  </header>
+
+  <main>
+    <form id="setForm">
+      <label for="universalSet">Universal Set (comma-separated)</label>
+      <input type="text" id="universalSet" placeholder="e.g., 1,2,3,4,5,6" required />
+
+      <label for="setA">Set A</label>
+      <input type="text" id="setA" placeholder="e.g., 1,2,3" required />
+
+      <label for="setB">Set B</label>
+      <input type="text" id="setB" placeholder="e.g., 3,4,5" required />
+
+      <label for="setC">Set C (optional for 3-set Venn)</label>
+      <input type="text" id="setC" placeholder="e.g., 2,4,6" />
+
+      <button type="submit">🔍 Compute & Visualize</button>
+    </form>
+
+    <div id="results"></div>
+    <div id="vennDiagram" style="margin-top: 30px;"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Statique. All rights reserved.</p>
+  </footer>
+
+  <!-- Custom JS must come after D3 & Venn.js -->
+  <script src="js/set-theory.js"></script>
+</body>
+</html>

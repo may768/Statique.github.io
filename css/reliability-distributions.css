@@ -1,0 +1,127 @@
+/* === Global Reset === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === Body === */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f6fa;
+  color: #222;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+/* === Header === */
+header {
+  background-color: #002b5c;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+header nav a {
+  color: #d9e9ff;
+  text-decoration: none;
+  font-size: 0.95em;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+/* === Main === */
+main {
+  max-width: 800px;
+  margin: auto;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 43, 92, 0.1);
+}
+
+form label {
+  display: block;
+  margin: 15px 0 5px;
+  font-weight: 600;
+}
+
+form input,
+form select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  background-color: #0057b7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #003f8f;
+}
+
+/* === Results === */
+#result {
+  margin-top: 25px;
+  background: #eef3fc;
+  padding: 20px;
+  border-left: 5px solid #0057b7;
+  border-radius: 8px;
+}
+
+#result p {
+  margin-bottom: 10px;
+}
+
+/* === Plot === */
+#plot {
+  margin-top: 30px;
+}
+
+/* === Footer === */
+footer {
+  text-align: center;
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+
+/* === Responsive === */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 1.5em;
+  }
+
+  main {
+    padding: 15px;
+  }
+
+  form button {
+    width: 100%;
+  }
+}

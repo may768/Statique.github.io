@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Combinatorics Tool | Statique</title>
+  <link rel="stylesheet" href="css/combinatorics.css" />
+</head>
+<body>
+  <header>
+    <h1>🔢 Combinatorics Solver</h1>
+    <nav><a href="probability.html">← Back to Probability Tools</a></nav>
+  </header>
+
+  <main>
+    <form id="combinatoricsForm">
+      <label>n (Total items):
+        <input type="number" id="n" min="0" required />
+      </label>
+      <label>r (Selected items):
+        <input type="number" id="r" min="0" required />
+      </label>
+      <label for="operation">Select Operation:</label>
+      <select id="operation">
+        <option value="nCr">Combination (nCr)</option>
+        <option value="nPr">Permutation (nPr)</option>
+        <option value="factorial">Factorial (n!)</option>
+      </select>
+      <button type="submit">Compute</button>
+    </form>
+
+    <div id="result"></div>
+    <div id="solution"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Statique. All rights reserved.</p>
+  </footer>
+
+  <script src="js/combinatorics.js"></script>
+</body>
+</html>

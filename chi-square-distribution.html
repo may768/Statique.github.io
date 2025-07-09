@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Statique | Chi-Square Distribution</title>
+  <link rel="stylesheet" href="css/chi-square-distribution.css" />
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.4/jstat.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>📊 Chi-Square Distribution Calculator</h1>
+    <nav><a href="distribution.html">← Back to Distribution Tools</a></nav>
+  </header>
+
+  <main>
+    <form id="chiForm">
+      <label for="chiValue">Chi-Square Statistic (χ²):</label>
+      <input type="number" id="chiValue" step="any" required placeholder="e.g., 10.5" />
+
+      <label for="df">Degrees of Freedom (df):</label>
+      <input type="number" id="df" required placeholder="e.g., 5" />
+
+      <select id="tail">
+        <option value="right">Right-tailed Test</option>
+        <option value="left">Left-tailed Test</option>
+        <option value="two">Two-tailed Test</option>
+      </select>
+
+      <button type="submit">📉 Calculate</button>
+    </form>
+
+    <div id="result"></div>
+    <div id="plot" style="margin-top: 30px;"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Statique. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("chiForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const chi = parseFloat(document.getElementById("chiValue").value);
+      const df = parseInt(document.getElementById("df").value);
+      const tail = document.getElementById("tail").value;
+      const result = document.getElementById("result");
+      const plot = document.getElementById("plot");
+
+      if (chi < 0 || df <= 0) {
+        result.innerHTML = `<p style="color:red;">χ² must be ≥ 0 and df must be > 0.</p>`;
+        return;
+      }
+
+      // Chi-square distribution calculations using jStat
+      const cdf = jStat.chisquare.cdf(chi, df);
+      const pRight = 1 - cdf;
+      const pLeft = cdf;
+      const pTwo = 2 * Math.min(pLeft, pRight);
+
+      // Step-by-step explanation
+      let explanation = `<h3>📘 Solution</h3>`;
+      explanation += `<p><strong>Step 1:</strong> Given χ² = ${chi}, df = ${df}, and ${tail}-tailed test.</p>`;
+      explanation += `<p><strong>Step 2:</strong> Use the chi-square CDF to calculate area:</p>`;
+
+      if (tail === "right") {
+        explanation += `<p>P(χ² ≥ ${chi}) = 1 - CDF(${chi}) = ${pRight.toFixed(6)}</p>`;
+      } else if (tail === "left") {
+        explanation += `<p>P(χ² ≤ ${chi}) = CDF(${chi}) = ${pLeft.toFixed(6)}</p>`;
+      } else {
+        explanation += `<p>P-value = 2 × min(CDF, 1 - CDF) = ${pTwo.toFixed(6)}</p>`;
+      }
+
+      result.innerHTML = explanation;
+
+      // Plotting
+      const xVals = [];
+      const yVals = [];
+      const maxX = Math.max(chi + 10, df + 20);
+
+      for (let x = 0; x <= maxX; x += 0.1) {
+        xVals.push(x);
+        yVals.push(jStat.chisquare.pdf(x, df));
+      }
+
+      const trace = {
+        x: xVals,
+        y: yVals,
+        type: "scatter",
+        name: "Chi-Square PDF",
+        line: { color: "#0077cc" }
+      };
+
+      const shaded = {
+        x: [],
+        y: [],
+        type: "scatter",
+        fill: "tozeroy",
+        fillcolor: "rgba(255,99,132,0.5)",
+        line: { color: "transparent" },
+        name: "P-value Region",
+        hoverinfo: "skip"
+      };
+
+      xVals.forEach((x, i) => {
+        if ((tail === "right" && x >= chi) ||
+            (tail === "left" && x <= chi) ||
+            (tail === "two" && (x <= jStat.chisquare.inv(pTwo / 2, df) || x >= jStat.chisquare.inv(1 - pTwo / 2, df)))) {
+          shaded.x.push(x);
+          shaded.y.push(yVals[i]);
+        }
+      });
+
+      const layout = {
+        title: `Chi-Square Distribution (df = ${df})`,
+        xaxis: { title: "χ² Value" },
+        yaxis: { title: "Probability Density" }
+      };
+
+      Plotly.newPlot("plot", [trace, shaded], layout);
+    });
+  </script>
+</body>
+</html>
