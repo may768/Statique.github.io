@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Measures of Dispersion</title>
+  <link rel="stylesheet" href="css/dispersion.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Measures of Dispersion</h1>
+    <nav><a href="index.html">&larr; Back to Tools</a></nav>
+  </header>
+
+  <main>
+    <form id="dispersion-form">
+      <label for="dataInput">Enter numbers (comma or space-separated):</label>
+      <input type="text" id="dataInput" placeholder="e.g. 4, 7, 2, 9, 5">
+      <button type="submit">Calculate</button>
+    </form>
+
+    <section id="results" style="display:none;">
+      <h2>Results</h2>
+      <div id="rangeResult"></div>
+      <div id="varianceResult"></div>
+      <div id="stdDevResult"></div>
+      <div id="iqrResult"></div>
+    </section>
+
+    <section id="steps" style="display:none;">
+      <h2>Step-by-Step Explanation</h2>
+      <div id="rangeSteps" class="step"></div>
+      <div id="varianceSteps" class="step"></div>
+      <div id="stdDevSteps" class="step"></div>
+      <div id="iqrSteps" class="step"></div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Statique. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById('dispersion-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const input = document.getElementById('dataInput').value.trim();
+      const values = input.split(/[\s,]+/).map(Number).filter(x => !isNaN(x));
+      if (values.length < 2) return alert('Please enter at least two valid numbers.');
+
+      const sorted = [...values].sort((a, b) => a - b);
+      const n = values.length;
+      const min = sorted[0];
+      const max = sorted[n - 1];
+      const range = max - min;
+
+      const mean = values.reduce((a, b) => a + b, 0) / n;
+      const variance = values.reduce((sum, x) => sum + Math.pow(x - mean, 2), 0) / n;
+      const stdDev = Math.sqrt(variance);
+
+      const q1 = sorted[Math.floor((n - 1) * 0.25)];
+      const q3 = sorted[Math.floor((n - 1) * 0.75)];
+      const iqr = q3 - q1;
+
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('steps').style.display = 'block';
+
+      document.getElementById('rangeResult').innerHTML = `<strong>Range:</strong> ${range}`;
+      document.getElementById('varianceResult').innerHTML = `<strong>Variance:</strong> ${variance.toFixed(2)}`;
+      document.getElementById('stdDevResult').innerHTML = `<strong>Standard Deviation:</strong> ${stdDev.toFixed(2)}`;
+      document.getElementById('iqrResult').innerHTML = `<strong>IQR:</strong> ${iqr}`;
+
+      document.getElementById('rangeSteps').innerHTML = `
+        <h3>Range Calculation:</h3>
+        <p>Sorted Data: [${sorted.join(', ')}]</p>
+        <p>Range = Max - Min = ${max} - ${min} = <strong>${range}</strong></p>
+      `;
+
+      document.getElementById('varianceSteps').innerHTML = `
+        <h3>Variance Calculation:</h3>
+        <p>Mean = ${mean.toFixed(2)}</p>
+        <p>Squared differences: [${values.map(x => `(${x} - ${mean.toFixed(2)})² = ${(x - mean) ** 2}`).join(', ')}]</p>
+        <p>Variance = Sum of squares / n = ${(variance * n).toFixed(2)} / ${n} = <strong>${variance.toFixed(2)}</strong></p>
+      `;
+
+      document.getElementById('stdDevSteps').innerHTML = `
+        <h3>Standard Deviation:</h3>
+        <p>Standard Deviation = √Variance = √${variance.toFixed(2)} = <strong>${stdDev.toFixed(2)}</strong></p>
+      `;
+
+      document.getElementById('iqrSteps').innerHTML = `
+        <h3>Interquartile Range (IQR):</h3>
+        <p>Q1 = ${q1}, Q3 = ${q3}</p>
+        <p>IQR = Q3 - Q1 = ${q3} - ${q1} = <strong>${iqr}</strong></p>
+      `;
+    });
+  </script>
+</body>
+</html>
