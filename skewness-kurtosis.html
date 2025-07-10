@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skewness & Kurtosis Calculator</title>
+  <link rel="stylesheet" href="css/skewness-kurtosis.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Skewness & Kurtosis Calculator</h1>
+    <nav><a href="index.html">← Back to Tools</a></nav>
+  </header>
+
+  <main>
+    <form id="sk-form">
+      <label for="dataInput">Enter numbers (comma or space-separated):</label>
+      <input type="text" id="dataInput" placeholder="e.g. 3, 7, 4, 6, 5, 9" />
+      <button type="submit">Calculate</button>
+    </form>
+
+    <section id="results" style="display:none;">
+      <h2>Results</h2>
+      <div id="skewnessResult"></div>
+      <div id="kurtosisResult"></div>
+    </section>
+
+    <section id="steps" style="display:none;">
+      <h2>Step-by-Step Explanation</h2>
+      <div id="skewnessSteps" class="step"></div>
+      <div id="kurtosisSteps" class="step"></div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Statique. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("sk-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const input = document.getElementById("dataInput").value.trim();
+      const values = input.split(/[\s,]+/).map(Number).filter(x => !isNaN(x));
+      if (values.length < 3) {
+        alert("Enter at least 3 numbers.");
+        return;
+      }
+
+      const n = values.length;
+      const mean = values.reduce((a, b) => a + b, 0) / n;
+
+      const stdDev = Math.sqrt(values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / n);
+
+      const skewness = (
+        values.reduce((sum, val) => sum + Math.pow((val - mean) / stdDev, 3), 0)
+      ) / n;
+
+      const kurtosis = (
+        values.reduce((sum, val) => sum + Math.pow((val - mean) / stdDev, 4), 0)
+      ) / n;
+
+      // Display Results
+      document.getElementById("results").style.display = "block";
+      document.getElementById("steps").style.display = "block";
+
+      document.getElementById("skewnessResult").innerHTML =
+        `<strong>Skewness:</strong> ${skewness.toFixed(4)} (${skewness > 0 ? 'Right-skewed' : skewness < 0 ? 'Left-skewed' : 'Symmetric'})`;
+
+      document.getElementById("kurtosisResult").innerHTML =
+        `<strong>Kurtosis:</strong> ${kurtosis.toFixed(4)} (${kurtosis > 3 ? 'Leptokurtic' : kurtosis < 3 ? 'Platykurtic' : 'Mesokurtic'})`;
+
+      // Steps
+      const deviations = values.map(val => val - mean);
+      const devCubes = deviations.map(d => d ** 3);
+      const devQuads = deviations.map(d => d ** 4);
+      const cubedSum = devCubes.reduce((a, b) => a + b, 0);
+      const quadSum = devQuads.reduce((a, b) => a + b, 0);
+
+      document.getElementById("skewnessSteps").innerHTML = `
+        <h3>Skewness Calculation:</h3>
+        <p>Mean = ${mean.toFixed(2)}</p>
+        <p>Standard Deviation = ${stdDev.toFixed(2)}</p>
+        <p>Skewness = (1/n) × Σ[(xᵢ - μ) / σ]³</p>
+        <p>Numerator (Σ deviation³) = ${cubedSum.toFixed(2)}</p>
+        <p>Skewness = <strong>${skewness.toFixed(4)}</strong></p>
+      `;
+
+      document.getElementById("kurtosisSteps").innerHTML = `
+        <h3>Kurtosis Calculation:</h3>
+        <p>Mean = ${mean.toFixed(2)}</p>
+        <p>Standard Deviation = ${stdDev.toFixed(2)}</p>
+        <p>Kurtosis = (1/n) × Σ[(xᵢ - μ) / σ]⁴</p>
+        <p>Numerator (Σ deviation⁴) = ${quadSum.toFixed(2)}</p>
+        <p>Kurtosis = <strong>${kurtosis.toFixed(4)}</strong></p>
+      `;
+    });
+  </script>
+
+</body>
+</html>
