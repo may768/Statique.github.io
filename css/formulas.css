@@ -1,0 +1,175 @@
+/* === Global Reset === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === Base Styles === */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  background-color: #f4f6fa;
+  color: #222;
+  padding: 20px;
+}
+
+/* === Header === */
+header {
+  background-color: #002b5c;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+header nav a {
+  color: #d9e9ff;
+  text-decoration: none;
+  font-size: 0.95em;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+/* === Main Section === */
+main {
+  max-width: 800px;
+  margin: auto;
+  padding: 0 10px;
+}
+
+section {
+  background-color: #ffffff;
+  padding: 20px 25px;
+  margin-bottom: 25px;
+  border-left: 5px solid #0057b7;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 43, 92, 0.08);
+}
+
+section h2 {
+  font-size: 1.4em;
+  color: #003366;
+  margin-bottom: 10px;
+}
+
+section p {
+  font-size: 1.1em;
+  color: #111;
+}
+
+/* === MathJax Styling === */
+mjx-container {
+  font-size: 1.2em !important;
+}
+
+/* === Footer === */
+footer {
+  text-align: center;
+  font-size: 0.9em;
+  margin-top: 40px;
+  color: #666;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
+}
+
+/* === Table Styling === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  overflow-x: auto;
+}
+
+th, td {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  text-align: left;
+  font-size: 1.05em;
+}
+
+thead {
+  background-color: #0057b7;
+  color: #fff;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.7em;
+  }
+
+  section {
+    padding: 18px 20px;
+  }
+
+  section h2 {
+    font-size: 1.3em;
+  }
+
+  section p {
+    font-size: 1.05em;
+  }
+
+  th, td {
+    font-size: 1em;
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  header {
+    padding: 16px;
+  }
+
+  header h1 {
+    font-size: 1.5em;
+  }
+
+  header nav a {
+    font-size: 0.9em;
+  }
+
+  section {
+    padding: 15px;
+  }
+
+  section h2 {
+    font-size: 1.2em;
+  }
+
+  section p {
+    font-size: 1em;
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  thead {
+    font-size: 0.95em;
+  }
+
+  th, td {
+    padding: 8px;
+    font-size: 0.95em;
+  }
+
+  mjx-container {
+    font-size: 1.1em !important;
+  }
+}
