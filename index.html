@@ -6,7 +6,6 @@
   <title>Statique – Elegant Statistical Solutions</title>
   <link rel="stylesheet" href="css/index.css" />
   <style>
-    /* Basic Reset and Flex Setup */
     * {
       margin: 0;
       padding: 0;
@@ -76,6 +75,13 @@
       font-size: 2rem;
       color: #ffeb3b;
       cursor: pointer;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hamburger span {
+      font-size: 1rem;
+      color: #ffeb3b;
     }
 
     /* Hero Section */
@@ -143,7 +149,7 @@
     /* Responsive Styles */
     @media (max-width: 768px) {
       .hamburger {
-        display: block;
+        display: flex;
       }
 
       nav {
@@ -176,7 +182,9 @@
       <h1 class="logo">Statique</h1>
 
       <!-- Hamburger Icon -->
-      <div class="hamburger" id="hamburger">&#9776;</div>
+      <div class="hamburger" id="hamburger">
+        &#9776; <span>Menu</span>
+      </div>
 
       <!-- Navigation Menu -->
       <nav id="nav-menu">
