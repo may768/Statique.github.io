@@ -5,6 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Statique – Elegant Statistical Solutions</title>
   <link rel="stylesheet" href="css/index.css" />
+  <style>
+    /* Sticky Footer Setup */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -13,21 +30,21 @@
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
-          
           <li><a href="formulas.html">Formulas</a></li>
-         <li><a href="tools.html">Tools</a></li>
-         <li><a href="resources.html">Resources</a></li>
-          <!-- More tools coming soon -->
+          <li><a href="tools.html">Tools</a></li>
+          <li><a href="resources.html">Resources</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <section class="hero">
-    <h2>Elegant Solutions for Complex Statistics</h2>
-    <p>From mean calculators to advanced inference tools, Statique covers it all.</p>
-    <a href="tools.html" class="cta-btn">Explore Statistique tools</a>
-  </section>
+  <main>
+    <section class="hero">
+      <h2>Elegant Solutions for Complex Statistics</h2>
+      <p>From mean calculators to advanced inference tools, Statique covers it all.</p>
+      <a href="tools.html" class="cta-btn">Explore Statique tools</a>
+    </section>
+  </main>
 
   <footer>
     <p>&copy; 2025 Statique. All rights reserved.</p>
