@@ -11,12 +11,13 @@ body {
   background-color: #f2f5fc;
   color: #222;
   padding: 20px;
+  line-height: 1.6;
 }
 
 header {
   background-color: #003366;
   color: #fff;
-  padding: 20px;
+  padding: 24px 20px;
   text-align: center;
   border-radius: 10px;
   margin-bottom: 30px;
@@ -24,13 +25,16 @@ header {
 
 header h1 {
   font-size: 2em;
+  margin-bottom: 6px;
 }
 
 header nav a {
   color: #cde7ff;
   text-decoration: none;
+  font-size: 1em;
 }
 
+/* === Main Container === */
 main {
   max-width: 1000px;
   margin: auto;
@@ -40,24 +44,30 @@ main {
 /* === Tool Cards === */
 .tool-card {
   background-color: #fff;
-  padding: 20px;
+  padding: 22px;
   margin-bottom: 20px;
   border-left: 6px solid #0057b8;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 85, 136, 0.1);
+  transition: transform 0.2s;
+}
+
+.tool-card:hover {
+  transform: translateY(-3px);
 }
 
 .tool-card h2 {
   font-size: 1.3em;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: #003366;
 }
 
 .tool-card p {
   font-size: 1.05em;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
+/* === Button === */
 .tool-button {
   display: inline-block;
   padding: 10px 16px;
@@ -79,12 +89,26 @@ footer {
   margin-top: 40px;
   font-size: 0.9em;
   color: #777;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
 }
 
 /* === Responsive Styles === */
 @media (max-width: 768px) {
+  body {
+    padding: 18px;
+  }
+
+  header {
+    padding: 20px;
+  }
+
   header h1 {
     font-size: 1.6em;
+  }
+
+  .tool-card {
+    padding: 20px;
   }
 
   .tool-card h2 {
@@ -96,18 +120,18 @@ footer {
   }
 
   .tool-button {
-    padding: 10px 14px;
     font-size: 0.95em;
+    padding: 10px 14px;
   }
 }
 
 @media (max-width: 480px) {
   body {
-    padding: 15px 10px;
+    padding: 14px 10px;
   }
 
   header {
-    padding: 16px 10px;
+    padding: 18px 12px;
   }
 
   header h1 {
