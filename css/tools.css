@@ -1,3 +1,11 @@
+/* === Reset === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === Body === */
 body {
   font-family: 'Segoe UI', sans-serif;
   background-color: #f4f6fa;
@@ -29,7 +37,7 @@ header nav a {
 /* === Tools Container === */
 .tools-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
   max-width: 1000px;
   margin: auto;
@@ -84,11 +92,11 @@ header nav a {
   }
 
   header {
-    padding: 20px 16px;
+    padding: 20px 12px;
   }
 
   header h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   .tool-card {
@@ -96,16 +104,35 @@ header nav a {
   }
 
   .tool-card h2 {
-    font-size: 1.3em;
+    font-size: 1.2em;
   }
 
   .tool-card p {
-    font-size: 1em;
+    font-size: 0.95em;
   }
 
   .tool-link {
-    font-size: 1em;
-    padding: 12px;
     width: 100%;
+    padding: 12px;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 400px) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  .tool-card h2 {
+    font-size: 1.1em;
+  }
+
+  .tool-card p {
+    font-size: 0.9em;
+  }
+
+  .tool-link {
+    font-size: 0.95em;
+    padding: 12px;
   }
 }
