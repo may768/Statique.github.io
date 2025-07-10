@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grouped Data Calculator</title>
+  <link rel="stylesheet" href="css/grouped-data.css" />
+</head>
+<body>
+  <header>
+    <h1>Grouped Data Calculator</h1>
+    <nav><a href="index.html">← Back to Tools</a></nav>
+  </header>
+
+  <main>
+    <form id="groupedForm">
+      <table>
+        <thead>
+          <tr>
+            <th>Class Interval</th>
+            <th>Frequency</th>
+          </tr>
+        </thead>
+        <tbody id="dataRows">
+          <tr>
+            <td><input type="text" name="class[]" placeholder="e.g. 0-10" /></td>
+            <td><input type="number" name="freq[]" min="0" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" onclick="addRow()">Add Row</button>
+      <button type="submit">Calculate</button>
+    </form>
+
+    <section id="results" style="display:none;">
+      <h2>Results</h2>
+      <div id="meanResult"></div>
+      <div id="medianResult"></div>
+      <div id="modeResult"></div>
+    </section>
+
+    <section id="steps" style="display:none;">
+      <h2>Step-by-Step Explanation</h2>
+      <div id="meanSteps" class="step"></div>
+      <div id="medianSteps" class="step"></div>
+      <div id="modeSteps" class="step"></div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Statique. All rights reserved.
+  </footer>
+
+  <script>
+    function addRow() {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><input type="text" name="class[]" placeholder="e.g. 10-20" /></td>
+        <td><input type="number" name="freq[]" min="0" /></td>
+      `;
+      document.getElementById("dataRows").appendChild(row);
+    }
+
+    document.getElementById("groupedForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const classInputs = document.getElementsByName("class[]");
+      const freqInputs = document.getElementsByName("freq[]");
+
+      const classMarks = [];
+      const frequencies = [];
+      const intervals = [];
+
+      for (let i = 0; i < classInputs.length; i++) {
+        const interval = classInputs[i].value.trim();
+        const freq = Number(freqInputs[i].value);
+
+        if (!interval || isNaN(freq) || freq < 0) continue;
+
+        const [low, high] = interval.split("-").map(Number);
+        if (isNaN(low) || isNaN(high)) continue;
+
+        const mid = (low + high) / 2;
+        classMarks.push(mid);
+        frequencies.push(freq);
+        intervals.push({ low, high, freq });
+      }
+
+      if (frequencies.length === 0) return alert("Please enter valid class intervals and frequencies.");
+
+      const totalFreq = frequencies.reduce((a, b) => a + b, 0);
+      const fx = classMarks.map((m, i) => m * frequencies[i]);
+      const sumFx = fx.reduce((a, b) => a + b, 0);
+      const mean = sumFx / totalFreq;
+
+      // === Median Calculation ===
+      const cf = [];
+      let cumulative = 0;
+      for (let f of frequencies) {
+        cumulative += f;
+        cf.push(cumulative);
+      }
+
+      const n = totalFreq;
+      const n2 = n / 2;
+      let medianClassIndex = cf.findIndex(c => c >= n2);
+      let L = intervals[medianClassIndex].low;
+      let F = medianClassIndex > 0 ? cf[medianClassIndex - 1] : 0;
+      let f = frequencies[medianClassIndex];
+      let h = intervals[medianClassIndex].high - intervals[medianClassIndex].low;
+      const median = L + ((n2 - F) / f) * h;
+
+      // === Mode Calculation ===
+      let modalIndex = frequencies.indexOf(Math.max(...frequencies));
+      let Lm = intervals[modalIndex].low;
+      let f1 = frequencies[modalIndex];
+      let f0 = modalIndex > 0 ? frequencies[modalIndex - 1] : 0;
+      let f2 = modalIndex < frequencies.length - 1 ? frequencies[modalIndex + 1] : 0;
+      let h_mode = intervals[modalIndex].high - intervals[modalIndex].low;
+      const mode = Lm + ((f1 - f0) / ((2 * f1) - f0 - f2)) * h_mode;
+
+      // === Display Results ===
+      document.getElementById("results").style.display = "block";
+      document.getElementById("steps").style.display = "block";
+
+      document.getElementById("meanResult").innerHTML = `<strong>Mean:</strong> ${mean.toFixed(2)}`;
+      document.getElementById("medianResult").innerHTML = `<strong>Median:</strong> ${median.toFixed(2)}`;
+      document.getElementById("modeResult").innerHTML = `<strong>Mode:</strong> ${mode.toFixed(2)}`;
+
+      document.getElementById("meanSteps").innerHTML = `
+        <h3>Mean Calculation:</h3>
+        <p>Class midpoints (x): [${classMarks.join(', ')}]</p>
+        <p>Frequencies (f): [${frequencies.join(', ')}]</p>
+        <p>f × x: [${fx.map(v => v.toFixed(2)).join(', ')}]</p>
+        <p>Σf = ${totalFreq}, Σfx = ${sumFx.toFixed(2)}</p>
+        <p>Mean = Σfx / Σf = ${sumFx.toFixed(2)} ÷ ${totalFreq} = <strong>${mean.toFixed(2)}</strong></p>
+      `;
+
+      document.getElementById("medianSteps").innerHTML = `
+        <h3>Median Calculation:</h3>
+        <p>Median class = ${intervals[medianClassIndex].low}-${intervals[medianClassIndex].high}</p>
+        <p>L = ${L}, N/2 = ${n2}, F = ${F}, f = ${f}, h = ${h}</p>
+        <p>Median = L + ((N/2 - F) / f) × h = ${L} + ((${n2} - ${F}) / ${f}) × ${h} = <strong>${median.toFixed(2)}</strong></p>
+      `;
+
+      document.getElementById("modeSteps").innerHTML = `
+        <h3>Mode Calculation:</h3>
+        <p>Modal class = ${intervals[modalIndex].low}-${intervals[modalIndex].high}</p>
+        <p>L = ${Lm}, f1 = ${f1}, f0 = ${f0}, f2 = ${f2}, h = ${h_mode}</p>
+        <p>Mode = L + ((f1 - f0) / (2f1 - f0 - f2)) × h = ${Lm} + ((${f1} - ${f0}) / (${2 * f1} - ${f0} - ${f2})) × ${h_mode} = <strong>${mode.toFixed(2)}</strong></p>
+      `;
+    });
+  </script>
+</body>
+</html>
