@@ -58,7 +58,7 @@ main {
   margin-bottom: 10px;
 }
 
-.btn {
+.tool-button {
   display: inline-block;
   padding: 10px 16px;
   background-color: #0057b8;
@@ -69,7 +69,7 @@ main {
   transition: background-color 0.3s ease;
 }
 
-.btn:hover {
+.tool-button:hover {
   background-color: #004199;
 }
 
@@ -126,7 +126,7 @@ footer {
     font-size: 0.95em;
   }
 
-  .btn {
+  .tool-button {
     display: block;
     width: 100%;
     text-align: center;
