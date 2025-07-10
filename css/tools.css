@@ -33,23 +33,26 @@ main {
   margin: 0 auto;
 }
 
-/* 🧰 Tools container in a single column */
+/* Tools container: strict vertical layout */
 .tools-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  display: block;  /* changed from flex/grid to block to force strict vertical */
   width: 100%;
 }
 
-/* 🧩 Individual tool card */
+/* Tool card styling */
 .tool-card {
   width: 100%;
+  margin-bottom: 1.5rem;
   box-sizing: border-box;
   background: white;
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tool-card:last-child {
+  margin-bottom: 0;
 }
 
 .tool-card:hover {
@@ -69,7 +72,7 @@ main {
   color: #444;
 }
 
-/* 🔗 Tool link button */
+/* Button styling */
 .tool-link {
   display: inline-block;
   background-color: #007bff;
