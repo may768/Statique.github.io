@@ -9,24 +9,29 @@ body {
 header {
   background-color: #002b5c;
   color: #fff;
-  padding: 20px;
+  padding: 24px;
   border-radius: 10px;
   margin-bottom: 30px;
   text-align: center;
 }
 
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
 header nav a {
   color: #cce5ff;
   text-decoration: none;
-  font-size: 0.95em;
+  font-size: 1em;
 }
 
 /* === Tools Container === */
 .tools-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 25px;
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
   padding: 0 10px;
 }
@@ -34,7 +39,7 @@ header nav a {
 /* === Tool Card === */
 .tool-card {
   background-color: #ffffff;
-  padding: 20px;
+  padding: 22px;
   border-left: 5px solid #0057b7;
   border-radius: 10px;
   box-shadow: 0 0 12px rgba(0, 43, 92, 0.1);
@@ -44,25 +49,26 @@ header nav a {
 }
 
 .tool-card h2 {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: #003366;
-  font-size: 1.3em;
+  font-size: 1.4em;
 }
 
 .tool-card p {
-  font-size: 1em;
-  margin-bottom: 15px;
+  font-size: 1.05em;
+  margin-bottom: 16px;
+  line-height: 1.6;
 }
 
 /* === Button Link === */
 .tool-link {
   display: inline-block;
-  padding: 10px 14px;
+  padding: 12px 16px;
   background-color: #0057b7;
   color: white;
   border-radius: 6px;
   text-decoration: none;
-  font-size: 0.95em;
+  font-size: 1em;
   text-align: center;
   transition: background-color 0.3s ease;
 }
@@ -72,26 +78,34 @@ header nav a {
 }
 
 /* === Mobile Specific Adjustments === */
-@media (max-width: 500px) {
-  header h1 {
-    font-size: 1.6em;
-  }
-
-  .tool-card {
+@media (max-width: 600px) {
+  body {
     padding: 16px;
   }
 
+  header {
+    padding: 20px 16px;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  .tool-card {
+    padding: 18px;
+  }
+
   .tool-card h2 {
-    font-size: 1.2em;
+    font-size: 1.3em;
   }
 
   .tool-card p {
-    font-size: 0.95em;
+    font-size: 1em;
   }
 
   .tool-link {
-    font-size: 0.9em;
-    padding: 10px;
+    font-size: 1em;
+    padding: 12px;
     width: 100%;
   }
 }
