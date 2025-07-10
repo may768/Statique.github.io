@@ -17,7 +17,7 @@ html, body {
   line-height: 1.6;
 }
 
-/* Background animation */
+/* Animated Gradient Background */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -50,6 +50,8 @@ nav ul {
   display: flex;
   list-style: none;
   gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 nav ul li a {
@@ -64,7 +66,7 @@ nav ul li a:hover {
   color: #ffffff;
 }
 
-/* MAIN / HERO */
+/* MAIN / HERO SECTION */
 main {
   flex: 1;
   display: flex;
@@ -126,7 +128,7 @@ footer {
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE STYLES */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -135,9 +137,12 @@ footer {
   }
 
   nav ul {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
+    display: flex;
+    flex-direction: row;  /* 👈 Stay in row even on mobile */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 0.5rem;
   }
 
   .hero h2 {
