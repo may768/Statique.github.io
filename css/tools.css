@@ -1,78 +1,87 @@
 /* Base layout */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
-  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9f9f9;
+  color: #222;
 }
 
 header {
   background: #004080;
   color: white;
-  padding: 1rem;
+  padding: 1.2rem;
   text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
 }
 
 nav a {
-  color: #ffd700;
+  color: #ffdd57;
   text-decoration: none;
   font-size: 1rem;
+  display: inline-block;
+  margin-top: 0.5rem;
 }
 
 main {
-  padding: 1.5rem;
+  padding: 2rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
+/* 🧰 Tools container in a single column */
 .tools-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
 }
 
-/* Tool card */
+/* 🧩 Individual tool card */
 .tool-card {
+  width: 100%;
+  box-sizing: border-box;
   background: white;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  flex: 1 1 calc(33.333% - 1rem);
-  min-width: 280px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 
 .tool-card h2 {
   margin-top: 0;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  color: #004080;
 }
 
 .tool-card p {
-  font-size: 0.95rem;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  color: #444;
 }
 
+/* 🔗 Tool link button */
 .tool-link {
   display: inline-block;
-  margin-top: 1rem;
+  background-color: #007bff;
   color: white;
-  background: #007bff;
-  padding: 0.6rem 1rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
   text-decoration: none;
-  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
 }
 
 .tool-link:hover {
-  background: #0056b3;
-}
-
-/* 📱 Mobile responsiveness */
-@media (max-width: 768px) {
-  .tools-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .tool-card {
-    flex: 1 1 100%;
-    width: 100%;
-  }
+  background-color: #0056b3;
 }
