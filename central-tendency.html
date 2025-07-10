@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Central Tendency Calculator</title>
+  <link rel="stylesheet" href="css/central-tendency.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Central Tendency Calculator</h1>
+    <nav>
+      <a href="index.html">← Back to Tools</a>
+    </nav>
+  </header>
+
+  <main>
+    <form id="ct-form" class="form-section">
+      <label for="dataInput">Enter numbers (comma or space-separated):</label>
+      <input type="text" id="dataInput" placeholder="e.g. 5, 3, 8, 8, 2, 4" />
+      <button type="submit">Calculate</button>
+    </form>
+
+    <section id="results" style="display:none;">
+      <h2>Results</h2>
+      <div id="meanResult"></div>
+      <div id="medianResult"></div>
+    </section>
+
+    <section id="steps" style="display:none;">
+      <h2>Step-by-Step Explanation</h2>
+      <div id="meanSteps" class="step-block"></div>
+      <div id="medianSteps" class="step-block"></div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Statique. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById('ct-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const input = document.getElementById('dataInput').value.trim();
+      const values = input.split(/[\s,]+/).map(Number).filter(x => !isNaN(x));
+
+      if (values.length === 0) {
+        alert('Please enter valid numbers.');
+        return;
+      }
+
+      const sorted = [...values].sort((a, b) => a - b);
+
+      // === Mean ===
+      const sum = values.reduce((a, b) => a + b, 0);
+      const mean = sum / values.length;
+
+      // === Median ===
+      const mid = Math.floor(sorted.length / 2);
+      const median = sorted.length % 2 === 0
+        ? (sorted[mid - 1] + sorted[mid]) / 2
+        : sorted[mid];
+
+      // === Display Results ===
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('steps').style.display = 'block';
+
+      document.getElementById('meanResult').innerHTML = `<strong>Mean:</strong> ${mean.toFixed(2)}`;
+      document.getElementById('medianResult').innerHTML = `<strong>Median:</strong> ${median}`;
+
+      // === Mean Steps ===
+      document.getElementById('meanSteps').innerHTML = `
+        <h3>Mean Calculation:</h3>
+        <p>Sum of all numbers = ${values.join(' + ')} = ${sum}</p>
+        <p>Count = ${values.length}</p>
+        <p>Mean = ${sum} ÷ ${values.length} = <strong>${mean.toFixed(2)}</strong></p>
+      `;
+
+      // === Median Steps ===
+      document.getElementById('medianSteps').innerHTML = `
+        <h3>Median Calculation:</h3>
+        <p>Sorted data: [${sorted.join(', ')}]</p>
+        ${sorted.length % 2 === 0
+          ? `<p>Even number of values → Median = average of ${sorted[mid - 1]} and ${sorted[mid]}</p>
+             <p>Median = (${sorted[mid - 1]} + ${sorted[mid]}) ÷ 2 = <strong>${median}</strong></p>`
+          : `<p>Odd number of values → Middle value = <strong>${median}</strong></p>`}
+      `;
+    });
+  </script>
+
+</body>
+</html>
