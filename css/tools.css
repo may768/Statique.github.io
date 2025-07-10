@@ -1,90 +1,128 @@
-/* Base layout */
-body {
+/* Reset & Base */
+* {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f9f9f9;
-  color: #222;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* Header */
 header {
-  background: #004080;
+  background: linear-gradient(to right, #003366, #0059b3);
   color: white;
   padding: 1.2rem;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
   margin: 0;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
-nav a {
-  color: #ffdd57;
-  text-decoration: none;
-  font-size: 1rem;
-  display: inline-block;
+/* Navigation */
+nav {
   margin-top: 0.5rem;
 }
 
+nav a {
+  color: #ffeb3b;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0.8rem;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #ffffff;
+}
+
+/* Main container */
 main {
-  padding: 2rem 1rem;
-  max-width: 800px;
+  padding: 2rem 1.5rem;
+  max-width: 900px;
   margin: 0 auto;
 }
 
-/* Tools container: strict vertical layout */
+/* Tools container - strict vertical */
 .tools-container {
-  display: block;  /* changed from flex/grid to block to force strict vertical */
+  display: block;
   width: 100%;
 }
 
-/* Tool card styling */
+/* Tool Card */
 .tool-card {
-  width: 100%;
-  margin-bottom: 1.5rem;
-  box-sizing: border-box;
-  background: white;
+  background: #ffffff;
   border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.tool-card:last-child {
-  margin-bottom: 0;
+  padding: 2rem;
+  margin-bottom: 1.8rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .tool-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .tool-card h2 {
-  margin-top: 0;
-  font-size: 1.3rem;
-  color: #004080;
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+  color: #003366;
 }
 
 .tool-card p {
   font-size: 1rem;
+  color: #555;
   margin-bottom: 1.2rem;
-  color: #444;
 }
 
-/* Button styling */
+/* Tool Button */
 .tool-link {
   display: inline-block;
-  background-color: #007bff;
+  background: linear-gradient(to right, #00b4db, #0073e6);
   color: white;
-  padding: 0.7rem 1.2rem;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
+  padding: 0.75rem 1.3rem;
+  border-radius: 8px;
   font-size: 0.95rem;
-  transition: background 0.2s ease;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .tool-link:hover {
-  background-color: #0056b3;
+  background: linear-gradient(to right, #0073e6, #00b4db);
+  transform: translateY(-2px);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  main {
+    padding: 1.5rem 1rem;
+  }
+
+  .tool-card {
+    padding: 1.5rem;
+  }
+
+  .tool-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .tool-card p {
+    font-size: 0.95rem;
+  }
+
+  .tool-link {
+    width: 100%;
+    text-align: center;
+  }
 }
